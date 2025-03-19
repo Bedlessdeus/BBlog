@@ -1,3 +1,75 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+
+:root {
+	--form-secondary-bg: #132e3b;
+	--form-primary-bg: #1e454d;
+}
+
+* {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+.loading-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+}
+
+.loading-overlay-hide {
+	display: none;
+}
+
+.spinner {
+	width: 50px;
+	height: 50px;
+	border: 5px solid #fff;
+	border-top: 5px solid cyan;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+input {
+    @apply w-full rounded-lg border border-gray-700 bg-gray-800 p-3 text-gray-200 focus:ring focus:ring-cyan-500 disabled:cursor-not-allowed disabled:!text-gray-500 disabled:!select-none;
+}
+
+input.invalid {
+    @apply border-red-400 focus:ring focus:ring-red-400;
+}
+
+input.valid {
+    @apply border-green-400 focus:ring focus:ring-green-400;
+}
+
+label {
+    @apply mb-2 block text-gray-300;
+}
+
+button {
+    @apply w-full rounded-lg bg-cyan-600 px-6 py-2 font-semibold text-white transition hover:bg-cyan-700 disabled:bg-gray-500 disabled:text-gray-300;
+}
+
+.href {
+	@apply text-blue-400 hover:underline cursor-pointer;
+}
