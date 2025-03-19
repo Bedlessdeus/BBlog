@@ -1,9 +1,12 @@
 import { createToken, verifyPassword } from '$lib/server/crypt';
-import { getUser } from '$lib/server/data/db';
+import { getUser, addUser } from '$lib/server/data/db';
 import { validateMail, validatePassword } from '$lib/server/data/validator';
 import { genBasicResponse } from '$lib/server/netutil';
 import { fail, json, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { env } from '$env/dynamic/private';
+import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcryptjs';
 
 export const load: PageServerLoad = async ({ params }) => {
 	return { page: params.page };
@@ -11,6 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
 export const actions = {
     login: async ({ cookies, request, locals }) => {
+		console.log("Login Call");
         const data = await request.formData();
         console.log(data);
         let email = data.get('email')?.toString() ?? '';
@@ -36,7 +40,7 @@ export const actions = {
         console.log('Redirect');
         return { success: true };
     },
-    logout: async ({ cookies, request, locals }) => {
+    register: async ({ cookies, request, locals }) => {
 		const data = await request.formData();
 		let email = data.get('email')?.toString() ?? '';
 		let password = data.get('password')?.toString() ?? '';

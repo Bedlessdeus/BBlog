@@ -4,8 +4,14 @@
 
 
 :root {
-	--form-secondary-bg: #132e3b;
-	--form-primary-bg: #1e454d;
+	--form-secondary-bg: #081E22;
+	--form-primary-bg: #0b272c;
+
+	--site-primary-bg: #051416;
+	--site-secondary-bg: #081d20;
+
+	--text-primary: #E0F7FA;
+	--text-secondary: #88C0D0;
 }
 
 * {

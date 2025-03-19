@@ -16,22 +16,23 @@
 
 </script>
 
-<div class="flex min-h-screen flex-col items-center justify-center bg-[var(--form-secondary-bg)]">
-	<div class="w-full max-w-md rounded-lg bg-[var(--form-primary-bg)] p-8 shadow-lg">
+<div class="flex min-h-screen flex-col items-center justify-center bg-[var(--site-primary-bg)]">
+	<div class="w-full max-w-md rounded-lg bg-[var(--site-secondary-bg)] p-8 shadow-lg">
 		<h2 class="mb-6 text-center text-2xl font-bold text-gray-100">{mode === 'login' ? "Login" : "Register"}</h2>
 
 		<form
 			id={mode === 'login' ? "login" : "register"}
 			class="space-y-4"
 			method="POST"
+			action={mode === 'login' ? "?/login" : "?/register"}
 			use:enhance={() => {
 				return ({ result }) => {
 					if (result.type == 'success') goto('/');
 					if (result.type != 'failure' && result.type != 'error') return;
 					triggerNotification(
 						notifyType.ERROR,
-						result.data.value ??
-							result.error?.message ??
+						(result.type === 'failure' && result.data?.value) ??
+							(result.type === 'error' ? result.error?.message : undefined) ??
 							'An Error Occurred while Processing your request, try again'
 					);
 				};
@@ -74,11 +75,16 @@
 		</form>
 		<p class="mt-4 text-center text-gray-300">
 			Already have an account?
-			<span class="href" onclick={
-				() => {
+			<a
+				href="/"
+				class="cursor-pointer text-cyan-500 hover:underline"
+				onclick={(e) => {
+					e.preventDefault();
 					mode = mode === 'login' ? 'register' : 'login';
-				}
-			}>{mode === 'login' ? "Register" : "Login"} Here!</span>
+				}}
+			>
+				{mode === 'login' ? "Register" : "Login"} Here!
+			</a>
 		</p>
 	</div>
 </div>

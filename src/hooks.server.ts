@@ -6,16 +6,17 @@ import { MongoClient } from "mongodb";
 import Datastore from "nedb-promises";
 
 
-const publicPaths = [
-    "/login",
-    "/register"
+const protectedPaths = [
+    "/account",
+    "/logout",
+    "/create"
 ];
 
 let db : any;
 let client : MongoClient;
 
 export const handleAuth: Handle = async ({ event, resolve }) => {
-    if (publicPaths.includes(event.url.pathname)) {
+    if (!protectedPaths.includes(event.url.pathname)) {
         return resolve(event);
     }
 
