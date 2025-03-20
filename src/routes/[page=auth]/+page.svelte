@@ -16,9 +16,9 @@
 
 </script>
 
-<div class="flex min-h-screen flex-col items-center justify-center bg-[var(--site-primary-bg)]">
-	<div class="w-full max-w-md rounded-lg bg-[var(--site-secondary-bg)] p-8 shadow-lg">
-		<h2 class="mb-6 text-center text-2xl font-bold text-gray-100">{mode === 'login' ? "Login" : "Register"}</h2>
+<div class="flex min-h-screen flex-col items-center justify-center bg-[var(--background-primary)]">
+	<div class="w-full max-w-md rounded-lg bg-[var(--background-raised)] p-8 shadow-lg">
+		<h2 class="mb-6 text-center text-2xl font-bold text-[var(--text-primary)]">{mode === 'login' ? "Login" : "Register"}</h2>
 
 		<form
 			id={mode === 'login' ? "login" : "register"}
@@ -76,7 +76,7 @@
 		<p class="mt-4 text-center text-gray-300">
 			Already have an account?
 			<a
-				href="/"
+				href="/{mode}"
 				class="cursor-pointer text-cyan-500 hover:underline"
 				onclick={(e) => {
 					e.preventDefault();

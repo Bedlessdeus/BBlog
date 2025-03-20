@@ -1,12 +1,12 @@
 import { createToken, verifyPassword } from '$lib/server/crypt';
-import { getUser, addUser } from '$lib/server/data/db';
 import { validateMail, validatePassword } from '$lib/server/data/validator';
 import { genBasicResponse } from '$lib/server/netutil';
-import { fail, json, redirect, type Actions } from '@sveltejs/kit';
+import { fail, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { env } from '$env/dynamic/private';
 import { v4 as uuid } from 'uuid';
 import bcrypt from 'bcryptjs';
+import { createUser, findUser } from '$lib/server/data/db';
 
 export const load: PageServerLoad = async ({ params }) => {
 	return { page: params.page };
@@ -29,7 +29,7 @@ export const actions = {
         if (!passValid.success) return fail(400, passValid);
 
         const db = locals.db;
-        const user = await getUser(db, null, email);
+        const user = await findUser(db, null, email);
 
         if (!user || !(await verifyPassword(password, user.password))) {
             return fail(401, genBasicResponse(false, 'Invalid Credentials', 401));
@@ -64,7 +64,7 @@ export const actions = {
 		if (!passValid.success) return fail(400, passValid);
 
 		const db = locals.db;
-		const user = await getUser(db, null, email);
+		const user = await findUser(db, null, email);
 
 		console.log(`Is null ${user === null}`);
 		if (user !== null) {
@@ -73,9 +73,10 @@ export const actions = {
 			return fail(400, genBasicResponse(false, 'User already exists'));
 		}
 
-		let createdUser = await addUser(db, {
+		let createdUser = await createUser(db, {
 			_id: uuid(),
 			email: email,
+			permission_level: 0,
 			password: await bcrypt.hash(password, 10)
 		});
 

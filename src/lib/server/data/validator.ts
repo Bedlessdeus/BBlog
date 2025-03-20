@@ -1,5 +1,4 @@
 import { env } from "$env/dynamic/private";
-import { genBasicResponse } from "$lib/server/netutil";
 
 export const validatePassword = (password: string | null) : {success: boolean, value: string} => {
     if(!password || password.trim() === "") return genBasicResponse(false, "Password Cannot be null or Empty");
@@ -15,4 +14,8 @@ export const validateMail = (mail: string | null) : {success: boolean, value: st
     if(mail.includes(" ")) return genBasicResponse(false, "E-Mail cannot include spaces");
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return genBasicResponse(false, "E-Mail format is invalid, must be user@domain.com");
     return genBasicResponse(true, "E-Mail is valid");
+}
+
+export const genBasicResponse = (success: boolean, value: string, errorCode?: number): { success: boolean; value: string; status: number; } => {
+    return { success, value, status: errorCode?? success? 200 : 400 };
 }

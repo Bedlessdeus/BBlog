@@ -13,8 +13,8 @@
 			if (result.type != 'failure' && result.type != 'error') return;
 			triggerNotification(
 				notifyType.ERROR,
-				result.data.value ??
-					result.error?.message ??
+				('data' in result && result.data?.value) ??
+					(result.type === 'error' ? result.error?.message : undefined) ??
 					'An Error Occurred while Processing your request, try again'
 			);
 		};

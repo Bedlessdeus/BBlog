@@ -21,7 +21,6 @@ export const handleAuth: Handle = async ({ event, resolve }) => {
     }
 
     const token = event.cookies.get("token");
-
     if (!token) {
         return new Response(null, { status: 302, headers: { Location: "/login" } });
     }

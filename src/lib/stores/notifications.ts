@@ -12,6 +12,5 @@ export const triggerNotification = (
 	disappear = 3
 ) => {
 	const id = ++idCounter;
-	console.log(id)
 	notifications.update((n) => [...n, { id, type, text, desc, disappear }]);
 };

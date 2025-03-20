@@ -25,9 +25,10 @@ export const validateInput = (
 	e: Event
 ) => {
 	if (!e.target) return genResponse(false, 'Input cannot be null');
-	let valid = validator(e.target.value);
-	e.target.classList.remove(valid.success ? 'invalid' : 'valid');
-	e.target.classList.add(valid.success ? 'valid' : 'invalid');
+	let target = e.target as HTMLInputElement
+	let valid = validator(target.value);
+	target.classList.remove(valid.success ? 'invalid' : 'valid');
+	target.classList.add(valid.success ? 'valid' : 'invalid');
 	return valid;
 };
 
